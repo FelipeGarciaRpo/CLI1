@@ -1,6 +1,6 @@
 import {google } from "@ai-sdk/google";
 import {streamText} from "ai";
-import {config} from "../../config/google.config.js";
+import {config} from "../config/google.config.js";
 import chalk from "chalk";
 import { apiKey } from "better-auth/plugins";
 
@@ -10,7 +10,7 @@ export class AIService{
             throw new Error("Google api key is not defined in the env")
         }
 
-        this.model = google(config.model, {
+        this.model = google(config.MINDHSELL_MODEL, {
             apiKey: config.googleApiKey
         })
     }
@@ -28,7 +28,7 @@ export class AIService{
             const streamConfig = {
                 model: this.model,
                 messages: messages,
-                //temperature: config.temperature
+                temperature: config.temperature ?? 1
             }
             const result = streamText(streamConfig);
             let fullResponse = ""
